@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -17,9 +19,17 @@ import static java.time.temporal.ChronoUnit.DAYS;
 @Service
 public class JWTUtil {
 
-    private static final String SECRET_KEY =
-            "foobar_123456789_foobar_123456789_foobar_123456789_foobar_123456789";
+    private final String secretKey;
+    private final Key signingKey;
 
+    public JWTUtil(@Value("${jwt.secret}") String secretKey) { // Read from application.properties/yml or env var
+        if (secretKey == null || secretKey.isBlank()) {
+            // Fallback or throw an error if not configured - for production, this should be a fatal error.
+            throw new IllegalStateException("JWT Secret Key is not configured. Please set jwt.secret property or JWT_SECRET_KEY environment variable.");
+        }
+        this.secretKey = secretKey;
+        this.signingKey = Keys.hmacShaKeyFor(this.secretKey.getBytes());
+    }
 
     public String issueToken(String subject) {
         return issueToken(subject, Map.of());
@@ -41,7 +51,7 @@ public class JWTUtil {
                 .builder()
                 .setClaims(claims)
                 .setSubject(subject)
-                .setIssuer("https://amigoscode.com")
+                .setIssuer("https://sacostapliego.github.io/online-portfolio/")
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(
                         Date.from(
@@ -68,7 +78,7 @@ public class JWTUtil {
     }
 
     private Key getSigningKey() {
-        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+        return this.signingKey;
     }
 
     public boolean isTokenValid(String jwt, String username) {

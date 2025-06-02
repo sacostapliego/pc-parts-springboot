@@ -11,15 +11,15 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>org.amigoscode</groupId>
-    <artifactId>amigoscode-api</artifactId>
+    <groupId>io.github.sacostapliego.pcparts</groupId>
+    <artifactId>pc-parts-api</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <docker.username>sacostap</docker.username>
-        <docker.image.name>spring-boot-api</docker.image.name>
+        <docker.image.name>pc-parts-api</docker.image.name>
         <docker.image.tag/>
         <jsonwebtoken.version>0.11.5</jsonwebtoken.version>
     </properties>

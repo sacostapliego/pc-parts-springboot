@@ -23,8 +23,8 @@ aws:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5332/customer
-    username: amigoscode
+    url: jdbc:postgresql://localhost:5332/pcpartsdb
+    username: sacostap
     password: password
   jpa:
     hibernate:
@@ -46,3 +46,6 @@ spring:
 logging: 
   level:
     org.springframework.jbdc.core: TRACE
+
+jwt:
+  secret: ${JWT_SECRET:foobar_123456789_foobar_123456789_foobar_123456789_foobar_123456789}
