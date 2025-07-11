@@ -6,21 +6,21 @@ import {
 } from '@chakra-ui/react';
 import SidebarWithHeader from "./components/shared/SideBar.jsx";
 import { useEffect, useState } from 'react';
-import { getCustomers } from "./services/client.js";
+import { getParts } from "./services/client.js";
 import CardWithImage from "./components/customer/CustomerCard.jsx";
-import CreateCustomerDrawer from "./components/customer/CreateCustomerDrawer.jsx";
+import CreatePartDrawer from './components/parts/CreatePartDrawer.jsx';
 import {errorNotification} from "./services/notification.js";
 
 const Parts = () => {
 
-    const [customers, setCustomers] = useState([]);
+    const [parts, setParts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [err, setError] = useState("");
 
-    const fetchCustomers = () => {
+    const fetchParts = () => {
         setLoading(true);
-        getCustomers().then(res => {
-            setCustomers(res.data)
+        getParts().then(res => {
+            setParts(res.data)
         }).catch(err => {
             setError(err.response.data.message)
             errorNotification(
@@ -33,7 +33,7 @@ const Parts = () => {
     }
 
     useEffect(() => {
-        fetchCustomers();
+        fetchParts();
     }, [])
 
     if (loading) {
@@ -53,37 +53,41 @@ const Parts = () => {
     if (err) {
         return (
             <SidebarWithHeader>
-                <CreateCustomerDrawer
-                    fetchCustomers={fetchCustomers}
+                <CreatePartDrawer
+                    fetchParts={fetchParts}
                 />
-                <Text mt={5}>Ooops there was an error</Text>
+                <Text mt={5}>Ooops there was an error: {err}</Text>
             </SidebarWithHeader>
         )
     }
 
-    if(customers.length <= 0) {
+    if(parts.length <= 0) {
         return (
             <SidebarWithHeader>
-                <CreateCustomerDrawer
-                    fetchCustomers={fetchCustomers}
+                <CreatePartDrawer
+                    fetchParts={fetchParts}
                 />
-                <Text mt={5}>No customers available</Text>
+                <Text mt={5}>No parts available</Text>
             </SidebarWithHeader>
         )
     }
 
     return (
         <SidebarWithHeader>
-            <CreateCustomerDrawer
-                fetchCustomers={fetchCustomers}
+             <CreatePartDrawer
+                fetchParts={fetchParts}
             />
             <Wrap justify={"center"} spacing={"30px"}>
-                {customers.map((customer, index) => (
+                {parts.map((part, index) => (
                     <WrapItem key={index}>
                         <CardWithImage
-                            {...customer}
-                            imageNumber={index}
-                            fetchCustomers={fetchCustomers}
+                            {...part}
+                            // Remapping part data to customer card props
+                            email={part.brand}
+                            age={part.price}
+                            gender={part.type}
+                            imageNumber={index} // You might want a dedicated image for parts
+                            fetchCustomers={fetchParts}
                         />
                     </WrapItem>
                 ))}

@@ -39,7 +39,7 @@ const router = createBrowserRouter([
     {
         path: "dashboard/builds",
         element: <Builds />
-    }
+    },
 ])
 
 ReactDOM

@@ -61,6 +61,27 @@ export const deleteCustomer = async (id) => {
     }
 }
 
+export const getParts = async () => {
+    try {
+        return await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/api/v1/parts`,
+        )
+    } catch (e) {
+        throw e;
+    }
+}
+
+export const savePart = async (part) => {
+    try {
+        return await axios.post(
+            `${import.meta.env.VITE_API_BASE_URL}/api/v1/parts`,
+            part,
+        )
+    } catch (e) {
+        throw e;
+    }
+}
+
 export const login = async (usernameAndPassword) => {
     try {
         return await axios.post(

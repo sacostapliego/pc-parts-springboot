@@ -43,7 +43,6 @@ const LinkItems = [
     {name: 'Builds', route: '/dashboard/builds', icon: FiTool},
     {name: 'Parts', route: '/dashboard/parts', icon: FiCpu},
     {name: 'Customers', route: '/dashboard/customers',  icon: FiUsers}, // Customers/might change to users/admins
-    {name: 'Settings', route: '/dashboard/settings', icon: FiSettings},
 ];
 
 export default function SidebarWithHeader({children}) {
@@ -86,9 +85,9 @@ const SidebarContent = ({onClose, ...rest}) => {
             pos="fixed"
             h="full"
             {...rest}>
-            <Flex h="20" flexDirection="column" alignItems="center" mx="8" mt={2} justifyContent="space-between">
+            <Flex h="10" flexDirection="column" alignItems="center" mx="8" mt={2} justifyContent="space-between">
                 <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold" >
-                    Dashboard
+                    {/*Not going to put text here lol*/}
                 </Text>
                 {/*TODO: add logo here */}
                 <CloseButton display={{base: 'flex', md: 'none'}} onClick={onClose}/>

@@ -5,6 +5,7 @@ services:
     environment:
       POSTGRES_USER: sacostap
       POSTGRES_PASSWORD: password
+      POSTGRES_DB: pcpartsdb
       PGDATA: /data/postgres
     volumes:
       - db:/data/postgres
