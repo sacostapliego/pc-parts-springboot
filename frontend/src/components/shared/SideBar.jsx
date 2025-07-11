@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     Avatar,
     Box,
@@ -31,7 +30,9 @@ import {
     FiSettings,
     FiUsers,
     FiMoon,
-    FiSun
+    FiSun,
+    FiTool,
+    FiCpu
 } from 'react-icons/fi';
 import {useAuth} from "../context/AuthContext.jsx";
 import { customerProfilePictureUrl } from "../../services/client.js";
@@ -39,7 +40,9 @@ import { customerProfilePictureUrl } from "../../services/client.js";
 
 const LinkItems = [
     {name: 'Home', route: '/dashboard', icon: FiHome},
-    {name: 'Customers', route: '/dashboard/customers',  icon: FiUsers},
+    {name: 'Builds', route: '/dashboard/builds', icon: FiTool},
+    {name: 'Parts', route: '/dashboard/parts', icon: FiCpu},
+    {name: 'Customers', route: '/dashboard/customers',  icon: FiUsers}, // Customers/might change to users/admins
     {name: 'Settings', route: '/dashboard/settings', icon: FiSettings},
 ];
 
@@ -83,16 +86,11 @@ const SidebarContent = ({onClose, ...rest}) => {
             pos="fixed"
             h="full"
             {...rest}>
-            <Flex h="20" flexDirection="column" alignItems="center" mx="8" mb={75} mt={2} justifyContent="space-between">
-                <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold" mb={5}>
+            <Flex h="20" flexDirection="column" alignItems="center" mx="8" mt={2} justifyContent="space-between">
+                <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold" >
                     Dashboard
                 </Text>
-                <Image
-                    borderRadius='full'
-                    boxSize='75px'
-                    src='https://user-images.githubusercontent.com/40702606/210880158-e7d698c2-b19a-4057-b415-09f48a746753.png'
-                    alt='Amigoscode'
-                />
+                {/*TODO: add logo here */}
                 <CloseButton display={{base: 'flex', md: 'none'}} onClick={onClose}/>
             </Flex>
             {LinkItems.map((link) => (

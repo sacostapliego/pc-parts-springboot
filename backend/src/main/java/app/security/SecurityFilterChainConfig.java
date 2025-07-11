@@ -47,7 +47,9 @@ public class SecurityFilterChainConfig {
                 .requestMatchers(
                         HttpMethod.GET,
                         "/ping",
-                        "/api/v1/customers/*/profile-image"
+                        "/api/v1/customers/*/profile-image",
+                        "/api/v1/dashboard/**",
+                        "/api/v1/customers"
                 )
                 .permitAll()
                 .requestMatchers(HttpMethod.GET, "/actuator/**")

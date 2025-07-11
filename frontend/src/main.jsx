@@ -8,6 +8,8 @@ import Login from "./components/login/Login.jsx";
 import Signup from "./components/signup/Signup";
 import AuthProvider from "./components/context/AuthContext.jsx";
 import ProtectedRoute from "./components/shared/ProtectedRoute.jsx";
+import Parts from './Parts.jsx'
+import Builds from './Builds.jsx'
 import './index.css'
 import Home from "./Home.jsx";
 
@@ -24,11 +26,19 @@ const router = createBrowserRouter([
     },
     {
         path: "dashboard",
-        element: <ProtectedRoute><Home/></ProtectedRoute>
+        element: <Home/>
     },
     {
         path: "dashboard/customers",
-        element: <ProtectedRoute><Customer /></ProtectedRoute>
+        element: <Customer />
+    },
+    {
+        path: "dashboard/parts",
+        element: <Parts />
+    },
+    {
+        path: "dashboard/builds",
+        element: <Builds />
     }
 ])
 
