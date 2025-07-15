@@ -16,8 +16,8 @@ public class PartController {
     }
 
     @GetMapping
-    public List<Part> getParts() {
-        return partService.getAllParts();
+    public List<Part> getParts(@RequestParam(required = false) String type) {
+        return partService.getAllParts(type);
     }
 
     @GetMapping("{partId}")

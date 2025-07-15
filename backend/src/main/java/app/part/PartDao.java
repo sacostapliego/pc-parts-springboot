@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PartDao {
-    List<Part> selectAllParts();
+    List<Part> selectAllParts(String type);
     Optional<Part> selectPartById(Long partId);
     void insertPart(Part part);
     boolean existsPartWithName(String name);

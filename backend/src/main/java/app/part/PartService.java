@@ -17,8 +17,8 @@ public class PartService {
         this.partDao = partDao;
     }
 
-    public List<Part> getAllParts() {
-        return partDao.selectAllParts();
+    public List<Part> getAllParts(String type) {
+        return partDao.selectAllParts(type);
     }
 
     public Part getPart(Long id) {

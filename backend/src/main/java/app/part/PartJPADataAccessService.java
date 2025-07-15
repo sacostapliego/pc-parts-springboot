@@ -17,9 +17,19 @@ public class PartJPADataAccessService implements PartDao {
     }
 
     @Override
-    public List<Part> selectAllParts() {
-        Page<Part> page = partRepository.findAll(Pageable.ofSize(1000));
-        return page.getContent();
+    public List<Part> selectAllParts(String type) {
+        if (type == null || type.isBlank()) {
+            Page<Part> page = partRepository.findAll(Pageable.ofSize(1000));
+            return page.getContent();
+        } else {
+            try {
+                PartType partType = PartType.valueOf(type.toUpperCase());
+                return partRepository.findByType(partType);
+            } catch (IllegalArgumentException e) {
+                // Or handle this case as you see fit, maybe return empty list or throw an exception
+                return List.of();
+            }
+        }
     }
 
     @Override

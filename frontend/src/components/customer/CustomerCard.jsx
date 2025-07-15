@@ -53,7 +53,6 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                         }
                         alt={'Author'}
                         css={{
-                            border: '2px solid white',
                         }}
                         onError={(e) => {
                             console.error('Error loading image:', e);

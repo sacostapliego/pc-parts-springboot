@@ -21,15 +21,15 @@ const Parts = () => {
     const [err, setError] = useState("");
     const [filterType, setFilterType] = useState("");
 
-    const fetchParts = () => {
+    const fetchParts = (type) => {
         setLoading(true);
-        getParts().then(res => {
+        getParts(type).then(res => {
             setParts(res.data)
         }).catch(err => {
-            setError(err.response.data.message)
+            setError(err.response?.data?.message || "An error occurred")
             errorNotification(
                 err.code,
-                err.response.data.message
+                err.response?.data?.message || "An error occurred while fetching parts"
             )
         }).finally(() => {
             setLoading(false)
@@ -37,8 +37,8 @@ const Parts = () => {
     }
 
     useEffect(() => {
-        fetchParts();
-    }, [])
+        fetchParts(filterType);
+    }, [filterType]);
 
     if (loading) {
         return (
@@ -58,7 +58,7 @@ const Parts = () => {
         return (
             <SidebarWithHeader>
                 <CreatePartDrawer
-                    fetchParts={fetchParts}
+                    fetchParts={() => fetchParts(filterType)}
                 />
                 <Text mt={5}>Ooops there was an error: {err}</Text>
             </SidebarWithHeader>
@@ -119,7 +119,7 @@ const Parts = () => {
                     <WrapItem key={index}>
                         <PartsWithImage
                             {...part}
-                            fetchParts={fetchParts}
+                            fetchParts={() => fetchParts(filterType)}
                         />
                     </WrapItem>
                 ))}
