@@ -19,7 +19,7 @@ const CreateCustomerDrawer = ({ fetchCustomers }) => {
     return <>
         <Button
             leftIcon={<AddIcon/>}
-            colorScheme={"teal"}
+            colorScheme={"blue"}
             onClick={onOpen}
         >
             Create customer

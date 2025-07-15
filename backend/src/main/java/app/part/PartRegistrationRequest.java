@@ -6,6 +6,7 @@ public record PartRegistrationRequest(
         String name,
         PartType type,
         String brand,
-        BigDecimal price
+        BigDecimal price,
+        String partImageLink
 ) {
 }

@@ -58,6 +58,8 @@ const UpdatePartForm = ({ fetchParts, initialValues, partId }) => {
                     price: Yup.number()
                         .min(0, 'Must be a positive number')
                         .required('Required'),
+                    partImageLink: Yup.string()
+                        .url('Must be a valid URL')
                 })}
                 onSubmit={(updatedPart, { setSubmitting }) => {
                     setSubmitting(true);
@@ -100,12 +102,14 @@ const UpdatePartForm = ({ fetchParts, initialValues, partId }) => {
                             <MySelect label="Part Type" name="type">
                                 <option value="">Select a part type</option>
                                 <option value="CPU">CPU</option>
-                                <option value="GPU">GPU</option>
+                                <option value="CPU_COOLER">CPU Cooler</option>
+                                <option value="GPU">GPU (Graphics Processing Unit)</option>
                                 <option value="MOTHERBOARD">Motherboard</option>
                                 <option value="RAM">RAM</option>
                                 <option value="STORAGE">Storage</option>
                                 <option value="PSU">PSU</option>
                                 <option value="CASE">Case</option>
+                                <option value="ACCESSORY">Accessory</option>
                             </MySelect>
 
                             <MyTextInput
@@ -113,6 +117,13 @@ const UpdatePartForm = ({ fetchParts, initialValues, partId }) => {
                                 name="price"
                                 type="number"
                                 placeholder="e.g. 250.00"
+                            />
+
+                            <MyTextInput
+                                label="Image Link"
+                                name="partImageLink"
+                                type="text"
+                                placeholder="e.g. https://example.com/image.jpg"
                             />
 
                             <Button disabled={!(isValid && dirty) || isSubmitting} type="submit">Submit</Button>

@@ -41,7 +41,7 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                     h={'120px'}
                     w={'full'}
                     src={
-                        'https://images.unsplash.com/photo-1612865547334-09cb8cb455da?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'
+                        'https://images.contentstack.io/v3/assets/blt06f605a34f1194ff/blt0f78843a19856728/67f815a3990fe52a411f60e4/ibuki-tsubo-XV81dRUMzpo-unsplash-Header_Mobile.jpg?format=webp&quality=60&width=1440'
                     }
                     objectFit={'cover'}
                 />

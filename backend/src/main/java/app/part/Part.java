@@ -33,22 +33,27 @@ public class Part {
     @Column(nullable = false)
     private BigDecimal price;
 
+    @Column(name = "part_image_link")
+    private String partImageLink;
+
     public Part() {
     }
 
-    public Part(Long id, String name, PartType type, String brand, BigDecimal price) {
+    public Part(Long id, String name, PartType type, String brand, BigDecimal price,  String partImageLink) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.brand = brand;
         this.price = price;
+        this.partImageLink = partImageLink;
     }
 
-    public Part(String name, PartType type, String brand, BigDecimal price) {
+    public Part(String name, PartType type, String brand, BigDecimal price, String partImageLink) {
         this.name = name;
         this.type = type;
         this.brand = brand;
         this.price = price;
+        this.partImageLink = partImageLink;
     }
 
     // Getters and Setters
@@ -93,17 +98,25 @@ public class Part {
         this.price = price;
     }
 
+    public String getPartImageLink() {
+        return partImageLink;
+    }
+
+    public void setPartImageLink(String partImageLink) {
+        this.partImageLink = partImageLink;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Part part = (Part) o;
-        return Objects.equals(id, part.id) && Objects.equals(name, part.name) && type == part.type && Objects.equals(brand, part.brand) && Objects.equals(price, part.price);
+        return Objects.equals(id, part.id) && Objects.equals(name, part.name) && type == part.type && Objects.equals(brand, part.brand) && Objects.equals(price, part.price) && Objects.equals(partImageLink, part.partImageLink);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, type, brand, price);
+        return Objects.hash(id, name, type, brand, price, partImageLink);
     }
 
     @Override
@@ -114,6 +127,7 @@ public class Part {
                 ", type=" + type +
                 ", brand='" + brand + '\'' +
                 ", price=" + price +
+                ", partImageLink='" + partImageLink + '\'' +
                 '}';
     }
 }

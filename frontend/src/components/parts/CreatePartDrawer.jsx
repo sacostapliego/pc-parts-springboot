@@ -19,7 +19,7 @@ const CreatePartDrawer = ({ fetchParts }) => {
     return <>
         <Button
             leftIcon={<AddIcon />}
-            colorScheme={"teal"}
+            colorScheme={"blue"}
             onClick={onOpen}
         >
             Add Part

@@ -44,7 +44,8 @@ const CreatePartForm = ({ fetchParts }) => {
                     name: '',
                     type: '',
                     brand: '',
-                    price: 0
+                    price: 0,
+                    partImageLink: ''
                 }}
                 validationSchema={Yup.object({
                     name: Yup.string()
@@ -52,7 +53,7 @@ const CreatePartForm = ({ fetchParts }) => {
                         .required('Required'),
                     type: Yup.string()
                         .oneOf(
-                            ['CPU', 'GPU', 'MOTHERBOARD', 'RAM', 'STORAGE', 'PSU', 'CASE'],
+                        ['CPU', 'CPU_COOLER', 'GPU', 'MOTHERBOARD', 'RAM', 'STORAGE', 'PSU', 'CASE', 'ACCESSORY'],
                             'Invalid Part Type'
                         )
                         .required('Required'),
@@ -62,6 +63,8 @@ const CreatePartForm = ({ fetchParts }) => {
                     price: Yup.number()
                         .min(0, 'Must be a positive number')
                         .required('Required'),
+                    partImageLink: Yup.string()
+                        .url('Must be a valid URL')
                 })}
                 onSubmit={(part, { setSubmitting }) => {
                     setSubmitting(true);
@@ -97,12 +100,14 @@ const CreatePartForm = ({ fetchParts }) => {
                             <MySelect label="Part Type" name="type">
                                 <option value="">Select a part type</option>
                                 <option value="CPU">CPU</option>
-                                <option value="GPU">GPU</option>
+                                <option value="CPU_COOLER">CPU Cooler</option>
+                                <option value="GPU">GPU (Graphics Processing Unit)</option>
                                 <option value="MOTHERBOARD">Motherboard</option>
                                 <option value="RAM">RAM</option>
                                 <option value="STORAGE">Storage</option>
                                 <option value="PSU">PSU</option>
                                 <option value="CASE">Case</option>
+                                <option value="ACCESSORY">Accessory</option>
                             </MySelect>
 
                             <MyTextInput
@@ -117,6 +122,13 @@ const CreatePartForm = ({ fetchParts }) => {
                                 name="price"
                                 type="number"
                                 placeholder="e.g. 250.00"
+                            />
+
+                            <MyTextInput
+                                label="Image Link"
+                                name="partImageLink"
+                                type="text"
+                                placeholder="e.g. https://example.com/image.jpg"
                             />
 
                             <Button disabled={!isValid || isSubmitting} type="submit">Submit</Button>

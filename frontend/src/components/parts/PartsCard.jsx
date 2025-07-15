@@ -22,7 +22,7 @@ import { deletePart } from "../../services/client.js";
 import { errorNotification, successNotification } from "../../services/notification.js";
 import UpdatePartDrawer from './UpdatePartDrawer.jsx';
 
-export default function PartsWithImage({ id, name, type, brand, price, fetchParts }) {
+export default function PartsWithImage({ id, name, type, brand, price, partImageLink, fetchParts }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = useRef();
 
@@ -40,9 +40,10 @@ export default function PartsWithImage({ id, name, type, brand, price, fetchPart
                 <Image
                     maxH={'300px'}
                     w={'full'}
-                    src={'https://bluemoji.io/cdn-proxy/646218c67da47160c64a84d5/66b3e9e11f8df07b5f1f9fc1_54.png'}
+                    src={partImageLink}
                     objectFit={'cover'}
                     alt={`${name} image`}
+                    fallbackSrc='https://via.placeholder.com/300'
                 />
 
 
@@ -58,7 +59,7 @@ export default function PartsWithImage({ id, name, type, brand, price, fetchPart
                 <Stack direction={'row'} justify={'center'} spacing={6} p={4}>
                     <Stack>
                         <UpdatePartDrawer
-                            initialValues={{ name, type, brand, price }}
+                            initialValues={{ name, type, brand, price, partImageLink}}
                             partId={id}
                             fetchParts={fetchParts}
                         />

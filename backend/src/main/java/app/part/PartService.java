@@ -37,7 +37,8 @@ public class PartService {
                 partRegistrationRequest.name(),
                 partRegistrationRequest.type(),
                 partRegistrationRequest.brand(),
-                partRegistrationRequest.price()
+                partRegistrationRequest.price(),
+                partRegistrationRequest.partImageLink()
         );
         partDao.insertPart(part);
     }
@@ -70,6 +71,11 @@ public class PartService {
         }
         if (updateRequest.price() != null && !updateRequest.price().equals(part.getPrice())) {
             part.setPrice(updateRequest.price());
+            changes = true;
+        }
+
+        if (updateRequest.partImageLink() != null && !updateRequest.partImageLink().equals(part.getPartImageLink())) {
+            part.setPartImageLink(updateRequest.partImageLink());
             changes = true;
         }
 
