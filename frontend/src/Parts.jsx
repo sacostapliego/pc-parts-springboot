@@ -2,7 +2,10 @@ import {
     Wrap,
     WrapItem,
     Spinner,
-    Text
+    Text,
+    Select,
+    Flex,
+    Box
 } from '@chakra-ui/react';
 import SidebarWithHeader from "./components/shared/SideBar.jsx";
 import { useEffect, useState } from 'react';
@@ -16,6 +19,7 @@ const Parts = () => {
     const [parts, setParts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [err, setError] = useState("");
+    const [filterType, setFilterType] = useState("");
 
     const fetchParts = () => {
         setLoading(true);
@@ -64,19 +68,52 @@ const Parts = () => {
     if(parts.length <= 0) {
         return (
             <SidebarWithHeader>
-                <CreatePartDrawer
-                    fetchParts={fetchParts}
-                />
+                <Flex justifyContent={"space-between"} alignItems={"center"} mb={5}>
+                    <CreatePartDrawer
+                        fetchParts={() => fetchParts(filterType)}
+                    />
+                    <Box w={"200px"}>
+                        <Select
+                            placeholder="All types"
+                            onChange={(e) => setFilterType(e.target.value)}
+                            value={filterType}
+                        >
+                            <option value="CPU">CPU</option>
+                            <option value="GPU">GPU</option>
+                            <option value="MOTHERBOARD">Motherboard</option>
+                            <option value="RAM">RAM</option>
+                            <option value="STORAGE">Storage</option>
+                            <option value="PSU">PSU</option>
+                            <option value="CASE">Case</option>
+                        </Select>
+                    </Box>
+                </Flex>
                 <Text mt={5}>No parts available</Text>
             </SidebarWithHeader>
         )
     }
-
     return (
         <SidebarWithHeader>
-             <CreatePartDrawer
-                fetchParts={fetchParts}
-            />
+             <Flex justifyContent={"space-between"} alignItems={"center"} mb={5}>
+                <CreatePartDrawer
+                    fetchParts={() => fetchParts(filterType)}
+                />
+                <Box w={"200px"}>
+                    <Select
+                        placeholder="All types"
+                        onChange={(e) => setFilterType(e.target.value)}
+                        value={filterType}
+                    >
+                        <option value="CPU">CPU</option>
+                        <option value="GPU">GPU</option>
+                        <option value="MOTHERBOARD">Motherboard</option>
+                        <option value="RAM">RAM</option>
+                        <option value="STORAGE">Storage</option>
+                        <option value="PSU">PSU</option>
+                        <option value="CASE">Case</option>
+                    </Select>
+                </Box>
+            </Flex>
             <Wrap justify={"center"} spacing={"30px"}>
                 {parts.map((part, index) => (
                     <WrapItem key={index}>

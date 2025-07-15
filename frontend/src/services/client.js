@@ -61,10 +61,12 @@ export const deleteCustomer = async (id) => {
     }
 }
 
-export const getParts = async () => {
+export const getParts = async (type = '') => {
     try {
+        const params = type ? { type } : {};
         return await axios.get(
             `${import.meta.env.VITE_API_BASE_URL}/api/v1/parts`,
+            { params }
         )
     } catch (e) {
         throw e;

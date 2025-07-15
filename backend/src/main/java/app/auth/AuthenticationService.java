@@ -8,6 +8,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import java.util.Map;
+
 
 @Service
 public class AuthenticationService {
@@ -33,7 +35,11 @@ public class AuthenticationService {
         );
         Customer principal = (Customer) authentication.getPrincipal();
         CustomerDTO customerDTO = customerDTOMapper.apply(principal);
-        String token = jwtUtil.issueToken(customerDTO.username(), customerDTO.roles());
+        String token = jwtUtil.issueToken(
+                customerDTO.username(),
+                customerDTO.roles(),
+                Map.of("id", principal.getId())
+        );
         return new AuthenticationResponse(token, customerDTO);
     }
 

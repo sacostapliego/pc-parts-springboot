@@ -185,7 +185,6 @@ const MobileNav = ({onOpen, ...rest}) => {
                             _focus={{boxShadow: 'none'}}>
                             <HStack>
                                 <Avatar
-                                    
                                     size={'sm'}
                                     src={customer?.id ? customerProfilePictureUrl(customer.id) : ''}
                                 />
@@ -197,8 +196,8 @@ const MobileNav = ({onOpen, ...rest}) => {
                                     <Text fontSize="sm">{customer?.username}</Text>
                                     {customer?.roles.map((role, id) => (
                                         <Text key={id} fontSize="xs" color="gray.600">
-                                            {role}
-                                        </Text>
+                                            {role} 
+                                        </Text> //Fix this to show roles properly, only Admin or User
                                     ))}
                                 </VStack>
                                 <Box display={{base: 'none', md: 'flex'}}>

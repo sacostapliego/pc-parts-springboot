@@ -37,12 +37,12 @@ public class CustomerController {
     public ResponseEntity<?> registerCustomer(
             @RequestBody CustomerRegistrationRequest request) {
         customerService.addCustomer(request);
-        String jwtToken = jwtUtil.issueToken(request.email(), "ROLE_USER");
+        String jwtToken = jwtUtil.issueToken(request.email(), List.of("ROLE_USER"));
         return ResponseEntity.ok()
                 .header(HttpHeaders.AUTHORIZATION, jwtToken)
                 .build();
     }
-
+    
     @DeleteMapping("{customerId}")
     public void deleteCustomer(
             @PathVariable("customerId") Integer customerId) {

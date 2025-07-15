@@ -38,15 +38,13 @@ export default function PartsWithImage({ id, name, type, brand, price, fetchPart
                 rounded={'md'}
                 overflow={'hidden'}>
                 <Image
-                    h={'120px'}
+                    maxH={'300px'}
                     w={'full'}
                     src={'https://bluemoji.io/cdn-proxy/646218c67da47160c64a84d5/66b3e9e11f8df07b5f1f9fc1_54.png'}
                     objectFit={'cover'}
                     alt={`${name} image`}
                 />
-                <Flex justify={'center'} mt={-12}>
-                    {/* You can add an icon or a small image for the part type here if you want */}
-                </Flex>
+
 
                 <Box p={6}>
                     <Stack spacing={2} align={'center'} mb={5}>
