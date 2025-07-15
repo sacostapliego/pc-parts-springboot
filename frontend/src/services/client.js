@@ -76,6 +76,30 @@ export const savePart = async (part) => {
         return await axios.post(
             `${import.meta.env.VITE_API_BASE_URL}/api/v1/parts`,
             part,
+            getAuthConfig()
+        )
+    } catch (e) {
+        throw e;
+    }
+}
+
+export const updatePart = async (id, update) => {
+    try {
+        return await axios.put(
+            `${import.meta.env.VITE_API_BASE_URL}/api/v1/parts/${id}`,
+            update,
+            getAuthConfig()
+        )
+    } catch (e) {
+        throw e;
+    }
+}
+
+export const deletePart = async (id) => {
+    try {
+        return await axios.delete(
+            `${import.meta.env.VITE_API_BASE_URL}/api/v1/parts/${id}`,
+            getAuthConfig()
         )
     } catch (e) {
         throw e;

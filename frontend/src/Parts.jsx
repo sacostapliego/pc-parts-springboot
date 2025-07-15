@@ -7,7 +7,7 @@ import {
 import SidebarWithHeader from "./components/shared/SideBar.jsx";
 import { useEffect, useState } from 'react';
 import { getParts } from "./services/client.js";
-import CardWithImage from "./components/customer/CustomerCard.jsx";
+import PartsWithImage from './components/parts/PartsCard.jsx';
 import CreatePartDrawer from './components/parts/CreatePartDrawer.jsx';
 import {errorNotification} from "./services/notification.js";
 
@@ -80,14 +80,9 @@ const Parts = () => {
             <Wrap justify={"center"} spacing={"30px"}>
                 {parts.map((part, index) => (
                     <WrapItem key={index}>
-                        <CardWithImage
+                        <PartsWithImage
                             {...part}
-                            // Remapping part data to customer card props
-                            email={part.brand}
-                            age={part.price}
-                            gender={part.type}
-                            imageNumber={index} // You might want a dedicated image for parts
-                            fetchCustomers={fetchParts}
+                            fetchParts={fetchParts}
                         />
                     </WrapItem>
                 ))}
