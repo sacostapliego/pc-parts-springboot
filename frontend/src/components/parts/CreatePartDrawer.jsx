@@ -10,42 +10,50 @@ import {
     useDisclosure
 } from "@chakra-ui/react";
 import CreatePartForm from "./CreatePartForm.jsx";
+import {useAuth} from "../context/AuthContext.jsx";
+
 
 const AddIcon = () => "+";
 const CloseIcon = () => "x";
 
 const CreatePartDrawer = ({ fetchParts }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const { isCustomerAuthenticated } = useAuth();
+
     return <>
-        <Button
-            leftIcon={<AddIcon />}
-            colorScheme={"blue"}
-            onClick={onOpen}
-        >
-            Add Part
-        </Button>
-        <Drawer isOpen={isOpen} onClose={onClose} size={"xl"}>
-            <DrawerOverlay />
-            <DrawerContent>
-                <DrawerCloseButton />
-                <DrawerHeader>Create new part</DrawerHeader>
+    {isCustomerAuthenticated() && (
+        <>
+            <Button
+                leftIcon={<AddIcon />}
+                colorScheme={"blue"}
+                onClick={onOpen}
+            >
+                Add Part
+            </Button>
+            <Drawer isOpen={isOpen} onClose={onClose} size={"xl"}>
+                <DrawerOverlay />
+                <DrawerContent>
+                    <DrawerCloseButton />
+                    <DrawerHeader>Create new part</DrawerHeader>
 
-                <DrawerBody>
-                    <CreatePartForm
-                        fetchParts={fetchParts}
-                    />
-                </DrawerBody>
+                    <DrawerBody>
+                        <CreatePartForm
+                            fetchParts={fetchParts}
+                        />
+                    </DrawerBody>
 
-                <DrawerFooter>
-                    <Button
-                        leftIcon={<CloseIcon />}
-                        colorScheme={"teal"}
-                        onClick={onClose}>
-                        Close
-                    </Button>
-                </DrawerFooter>
-            </DrawerContent>
-        </Drawer>
+                    <DrawerFooter>
+                        <Button
+                            leftIcon={<CloseIcon />}
+                            colorScheme={"teal"}
+                            onClick={onClose}>
+                            Close
+                        </Button>
+                    </DrawerFooter>
+                </DrawerContent>
+            </Drawer>
+        </>
+    )}
     </>
 }
 
