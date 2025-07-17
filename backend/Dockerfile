@@ -1,5 +1,5 @@
-# Use a base image with Maven and Java
-FROM maven:3.9.6-eclipse-temurin-17-jammy AS build
+# Use a specific, recent, and well-maintained Maven image from Eclipse Temurin
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 # Copy the pom.xml and download dependencies
 COPY pom.xml .
@@ -9,8 +9,8 @@ COPY src ./src
 # Build the application
 RUN mvn clean install -DskipTests
 
-# Use a smaller base image for the final container
-FROM eclipse-temurin:17-jdk-jammy
+# Use a specific, recent, and well-maintained base image from Eclipse Temurin
+FROM eclipse-temurin:17-jdk-slim
 WORKDIR /app
 # Copy the JAR file from the build stage
 COPY --from=build /app/target/*.jar app.jar
