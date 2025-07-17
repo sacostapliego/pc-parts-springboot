@@ -5,7 +5,7 @@ const Home = () => {
 
     return (
         <SidebarWithHeader>
-            <Text fontSize={"6xl"}>IN PROGRESS</Text>
+            <Text fontSize={"6xl"}>Coming soon</Text>
         </SidebarWithHeader>
     )
 }

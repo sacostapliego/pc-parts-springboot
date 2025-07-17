@@ -43,7 +43,7 @@ const LinkItems = [
     {name: 'Home', route: '/dashboard', icon: FiHome},
     {name: 'Builds', route: '/dashboard/builds', icon: FiTool},
     {name: 'Parts', route: '/dashboard/parts', icon: FiCpu},
-    {name: 'Customers', route: '/dashboard/customers',  icon: FiUsers}, // Customers/might change to users/admins
+    {name: 'Users', route: '/dashboard/customers',  icon: FiUsers}, // Customers/might change to users/admins
 ];
 
 export default function SidebarWithHeader({children}) {
