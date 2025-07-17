@@ -18,10 +18,10 @@ const CloseIcon = () => "x";
 
 const CreatePartDrawer = ({ fetchParts }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const { isCustomerAuthenticated } = useAuth();
+    const { isUserAdmin } = useAuth();
 
     return <>
-    {isCustomerAuthenticated() && (
+    {isUserAdmin() && (
         <>
             <Button
                 leftIcon={<AddIcon />}

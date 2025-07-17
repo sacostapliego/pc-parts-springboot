@@ -72,11 +72,12 @@ const Parts = () => {
                     <CreatePartDrawer
                         fetchParts={() => fetchParts(filterType)}
                     />
-                    <Box w={"200px"}>
+                    <Box w={"200px"} colorScheme={"blue"}>
                         <Select
                             placeholder="All types"
                             onChange={(e) => setFilterType(e.target.value)}
                             value={filterType}
+                            focusBorderColor='blue.500'
                         >
                             <option value="CPU">CPU</option>
                             <option value="GPU">GPU</option>
@@ -103,6 +104,7 @@ const Parts = () => {
                         placeholder="All types"
                         onChange={(e) => setFilterType(e.target.value)}
                         value={filterType}
+                        focusBorderColor='blue.500'
                     >
                         <option value="CPU">CPU</option>
                         <option value="GPU">GPU</option>
