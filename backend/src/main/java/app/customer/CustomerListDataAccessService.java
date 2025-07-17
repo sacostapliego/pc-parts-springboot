@@ -21,7 +21,8 @@ public class CustomerListDataAccessService implements CustomerDao {
                 "alex@gmail.com",
                 "password",
                 21,
-                Gender.MALE);
+                Gender.MALE,
+                Role.USER);
         customers.add(alex);
 
         Customer jamila = new Customer(
@@ -30,7 +31,8 @@ public class CustomerListDataAccessService implements CustomerDao {
                 "jamila@gmail.com",
                 "password",
                 19,
-                Gender.MALE);
+                Gender.MALE,
+                Role.USER);
         customers.add(jamila);
     }
 

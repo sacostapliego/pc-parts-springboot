@@ -56,6 +56,12 @@ public class Customer implements UserDetails {
     private Gender gender;
 
     @Column(
+        nullable = false
+    )
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @Column(
             nullable = false
     )
     private String password;
@@ -73,13 +79,15 @@ public class Customer implements UserDetails {
                     String email,
                     String password,
                     Integer age,
-                    Gender gender) {
+                    Gender gender,
+                    Role role) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.age = age;
         this.gender = gender;
+        this.role = role;
     }
 
     public Customer(Integer id,
@@ -88,8 +96,9 @@ public class Customer implements UserDetails {
                     String password,
                     Integer age,
                     Gender gender,
+                    Role role,
                     String profileImageId) {
-       this(id, name, email, password, age, gender);
+       this(id, name, email, password, age, gender, role);
        this.profileImageId = profileImageId;
     }
 
@@ -103,6 +112,7 @@ public class Customer implements UserDetails {
         this.password = password;
         this.age = age;
         this.gender = gender;
+        this.role = Role.USER; // Default role
     }
 
     public Integer getId() {
@@ -153,9 +163,17 @@ public class Customer implements UserDetails {
         this.profileImageId = profileImageId;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
     }
 
     @Override
@@ -193,12 +211,12 @@ public class Customer implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(email, customer.email) && Objects.equals(age, customer.age) && gender == customer.gender && Objects.equals(password, customer.password) && Objects.equals(profileImageId, customer.profileImageId);
+        return Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(email, customer.email) && Objects.equals(age, customer.age) && gender == customer.gender && role == customer.role && Objects.equals(password, customer.password) && Objects.equals(profileImageId, customer.profileImageId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email, age, gender, password, profileImageId);
+        return Objects.hash(id, name, email, age, gender, role, password, profileImageId);
     }
 
     @Override
@@ -209,9 +227,9 @@ public class Customer implements UserDetails {
                 ", email='" + email + '\'' +
                 ", age=" + age +
                 ", gender=" + gender +
+                ", role=" + role +
                 ", password='" + password + '\'' +
                 ", profileImageId='" + profileImageId + '\'' +
                 '}';
-    }    
-
+    }
 }

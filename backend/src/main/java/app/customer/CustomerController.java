@@ -36,8 +36,8 @@ public class CustomerController {
     @PostMapping
     public ResponseEntity<?> registerCustomer(
             @RequestBody CustomerRegistrationRequest request) {
-        customerService.addCustomer(request);
-        String jwtToken = jwtUtil.issueToken(request.email(), List.of("ROLE_USER"));
+        CustomerDTO customerDTO = customerService.addCustomer(request);
+        String jwtToken = jwtUtil.issueToken(customerDTO.username(), customerDTO.roles());
         return ResponseEntity.ok()
                 .header(HttpHeaders.AUTHORIZATION, jwtToken)
                 .build();

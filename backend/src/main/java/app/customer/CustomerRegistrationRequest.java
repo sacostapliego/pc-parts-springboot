@@ -5,6 +5,7 @@ public record CustomerRegistrationRequest(
         String email,
         String password,
         Integer age,
-        Gender gender
+        Gender gender,
+        Role role
 ) {
 }

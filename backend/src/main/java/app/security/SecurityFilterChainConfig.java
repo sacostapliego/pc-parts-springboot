@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -16,6 +17,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
+
 public class SecurityFilterChainConfig {
 
     private final AuthenticationProvider authenticationProvider;
@@ -39,22 +42,16 @@ public class SecurityFilterChainConfig {
                 .requestMatchers(
                         HttpMethod.POST,
                         "/api/v1/customers",
-                        "/api/v1/auth/login",
-                        "/api/v1/health-check",
-                        "/actuator/health",
-                        "/api/v1/parts"
+                        "/api/v1/auth/login"
                 )
                 .permitAll()
                 .requestMatchers(
                         HttpMethod.GET,
                         "/ping",
                         "/api/v1/customers/*/profile-image",
-                        "/api/v1/dashboard/**",
-                        "/api/v1/customers",
-                        "/api/v1/parts"
+                        "/api/v1/parts",
+                        "/api/v1/customers"
                 )
-                .permitAll()
-                .requestMatchers(HttpMethod.GET, "/actuator/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

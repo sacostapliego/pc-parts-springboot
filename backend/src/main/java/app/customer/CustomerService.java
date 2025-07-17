@@ -53,7 +53,7 @@ public class CustomerService {
                 ));
     }
 
-    public void addCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
+    public CustomerDTO addCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
         // check if email exists
         String email = customerRegistrationRequest.email();
         if (customerDao.existsCustomerWithEmail(email)) {
@@ -71,6 +71,12 @@ public class CustomerService {
                 customerRegistrationRequest.gender());
 
         customerDao.insertCustomer(customer);
+
+        // We need the ID for the DTO, so we fetch the customer back
+        Customer savedCustomer = customerDao.selectUserByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Could not find customer after saving"));
+
+        return customerDTOMapper.apply(savedCustomer);
     }
 
     public void deleteCustomerById(Integer customerId) {

@@ -5,6 +5,7 @@ import app.auth.AuthenticationResponse;
 import app.customer.CustomerDTO;
 import app.customer.CustomerRegistrationRequest;
 import app.customer.Gender;
+import app.customer.Role;
 import app.jwt.JWTUtil;
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
@@ -53,7 +54,7 @@ public class AuthenticationIT {
         String password = "password";
 
         CustomerRegistrationRequest customerRegistrationRequest = new CustomerRegistrationRequest(
-                name, email, password, age, gender
+                name, email, password, age, gender, Role.USER
         );
 
         AuthenticationRequest authenticationRequest = new AuthenticationRequest(

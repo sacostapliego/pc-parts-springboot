@@ -67,13 +67,23 @@ const AuthProvider = ({ children }) => {
         return true;
     }
 
+    const isUserAdmin = () => {
+        const token = localStorage.getItem("access_token");
+        if (!token) {
+            return false;
+        }
+        const decodedToken = jwtDecode(token);
+        return decodedToken.scopes && decodedToken.scopes.includes('ROLE_ADMIN');
+    }
+
     return (
         <AuthContext.Provider value={{
             customer,
             login,
             logOut,
             isCustomerAuthenticated,
-            setCustomerFromToken
+            setCustomerFromToken,
+            isUserAdmin
         }}>
             {children}
         </AuthContext.Provider>

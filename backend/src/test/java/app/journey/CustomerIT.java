@@ -1,6 +1,8 @@
 package app.journey;
 
 import app.customer.*;
+import app.customer.Role;
+
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
 import org.junit.jupiter.api.Test;
@@ -47,7 +49,7 @@ public class CustomerIT {
         Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
 
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                name, email, "password", age, gender
+                name, email, "password", age, gender, Role.USER
         );
         // send a post request
         String jwtToken = webTestClient.post()
@@ -122,11 +124,11 @@ public class CustomerIT {
         Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
 
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                name, email, "password", age, gender
+                name, email, "password", age, gender, Role.USER
         );
 
         CustomerRegistrationRequest request2 = new CustomerRegistrationRequest(
-                name, email + ".uk", "password", age, gender
+                name, email + ".uk", "password", age, gender, Role.USER
         );
 
         // send a post request to create customer 1
@@ -205,7 +207,7 @@ public class CustomerIT {
         Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
 
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                name, email, "password", age, gender
+                name, email, "password", age, gender, Role.USER
         );
 
         // send a post request
@@ -299,7 +301,7 @@ public class CustomerIT {
         Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
 
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                name, email, "password", age, gender
+                name, email, "password", age, gender, Role.USER
         );
 
         // send a post request

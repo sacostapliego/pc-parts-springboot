@@ -27,7 +27,7 @@ import {useAuth} from "../context/AuthContext.jsx";
 export default function PartsWithImage({ id, name, type, brand, price, partImageLink, fetchParts }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = useRef();
-    const { isCustomerAuthenticated } = useAuth();
+    const { isUserAdmin } = useAuth();
 
 
     return (
@@ -65,7 +65,7 @@ export default function PartsWithImage({ id, name, type, brand, price, partImage
                         <Text color={'gray.500'}>${price} | {type}</Text>
                     </Stack>
                 </Box>
-                {isCustomerAuthenticated() && (
+                {isUserAdmin() && (
                     <Stack direction={'row'} justify={'center'} spacing={6} p={4}>
                         <Stack>
                             <UpdatePartDrawer
