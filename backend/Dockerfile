@@ -10,7 +10,7 @@ COPY src ./src
 RUN mvn clean install -DskipTests
 
 # Use a specific, recent, and well-maintained base image from Eclipse Temurin
-FROM eclipse-temurin:17-jdk-slim
+FROM eclipse-temurin:17-jre
 WORKDIR /app
 # Copy the JAR file from the build stage
 COPY --from=build /app/target/*.jar app.jar
