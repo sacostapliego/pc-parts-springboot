@@ -78,7 +78,7 @@ const LoginForm = () => {
                             label={"Email"}
                             name={"username"}
                             type={"email"}
-                            placeholder={"hello@amigoscode.com"}
+                            placeholder={"hello@gmail.com"}
                         />
                         <MyTextInput
                             label={"Password"}
@@ -134,18 +134,12 @@ const Login = () => {
                 flexDirection={"column"}
                 alignItems={"center"}
                 justifyContent={"center"}
-                bgGradient={{sm: 'linear(to-r, blue.600, purple.600)'}}
+                bgGradient={{sm: 'linear(to-r, blue.600, blue.200)'}}
             >
                 <Text fontSize={"6xl"} color={'white'} fontWeight={"bold"} mb={5}>
-      
+                
                 </Text>
-                <Image
-                    alt={'Login Image'}
-                    objectFit={'scale-down'}
-                    src={
-                        'https://user-images.githubusercontent.com/40702606/215539167-d7006790-b880-4929-83fb-c43fa74f429e.png'
-                    }
-                />
+                {/* Text or Image later */}
             </Flex>
         </Stack>
     );
