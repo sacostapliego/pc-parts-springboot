@@ -10,6 +10,5 @@ export default defineConfig({
   server: {
     port: 3000,
   },
-  // This ensures that asset paths are generated correctly for production
   base: '/', 
 })
