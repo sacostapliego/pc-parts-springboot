@@ -51,7 +51,7 @@ const LoginForm = () => {
                         .email("Must be valid email")
                         .required("Email is required"),
                     password: Yup.string()
-                        .max(60, "Password cannot be more than 60 characters")
+                        .max(65, "Password cannot be more than 65 characters")
                         .required("Password is required")
                 })
             }
