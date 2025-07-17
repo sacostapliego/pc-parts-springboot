@@ -36,6 +36,7 @@ import {
 } from 'react-icons/fi';
 import {useAuth} from "../context/AuthContext.jsx";
 import { customerProfilePictureUrl } from "../../services/client.js";
+import {useNavigate} from "react-router-dom";
 
 
 const LinkItems = [
@@ -135,6 +136,12 @@ const NavItem = ({icon, route, children, ...rest}) => {
 const MobileNav = ({onOpen, ...rest}) => {
     const { logOut, customer } = useAuth();
     const { colorMode, toggleColorMode } = useColorMode();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logOut();
+        navigate("/");
+    }
 
     return (
         <Flex
@@ -194,11 +201,11 @@ const MobileNav = ({onOpen, ...rest}) => {
                                     spacing="1px"
                                     ml="2">
                                     <Text fontSize="sm">{customer?.username}</Text>
-                                    {customer?.roles.map((role, id) => (
-                                        <Text key={id} fontSize="xs" color="gray.600">
-                                            {role} 
-                                        </Text> //Fix this to show roles properly, only Admin or User
-                                    ))}
+                                    {customer?.roles.includes('ROLE_ADMIN') && (
+                                        <Text fontSize="xs" color="gray.600">
+                                            ADMIN
+                                        </Text>
+                                    )}
                                 </VStack>
                                 <Box display={{base: 'none', md: 'flex'}}>
                                     <FiChevronDown/>
@@ -212,7 +219,7 @@ const MobileNav = ({onOpen, ...rest}) => {
                             <MenuItem>Settings</MenuItem>
                             <MenuItem>Billing</MenuItem>
                             <MenuDivider/>
-                            <MenuItem onClick={logOut}>
+                            <MenuItem onClick={handleLogout}>
                                 Sign out
                             </MenuItem>
                         </MenuList>
