@@ -8,7 +8,6 @@ import {
     HStack,
     Icon,
     IconButton,
-    Link,
     Menu,
     MenuButton,
     MenuDivider,
@@ -19,7 +18,8 @@ import {
     useDisclosure,
     VStack,
     Image,
-    useColorMode
+    useColorMode,
+    Link
 } from '@chakra-ui/react';
 
 import {
@@ -36,7 +36,7 @@ import {
 } from 'react-icons/fi';
 import {useAuth} from "../context/AuthContext.jsx";
 import { customerProfilePictureUrl } from "../../services/client.js";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link as RouterLink} from "react-router-dom";
 
 
 const LinkItems = [
@@ -104,7 +104,7 @@ const SidebarContent = ({onClose, ...rest}) => {
 
 const NavItem = ({icon, route, children, ...rest}) => {
     return (
-        <Link href={route} style={{textDecoration: 'none'}} _focus={{boxShadow: 'none'}}>
+        <Link as={RouterLink} to={route} style={{textDecoration: 'none'}} _focus={{boxShadow: 'none'}}>
             <Flex
                 align="center"
                 p="4"
