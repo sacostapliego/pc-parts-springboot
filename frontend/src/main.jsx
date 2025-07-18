@@ -26,19 +26,19 @@ const router = createBrowserRouter([
     },
     {
         path: "dashboard",
-        element: <ProtectedRoute><Home/></ProtectedRoute>
+        element: <Home/>
     },
     {
         path: "dashboard/customers",
-        element: <ProtectedRoute><Customer /></ProtectedRoute>
+        element: <Customer />
     },
     {
         path: "dashboard/parts",
-        element: <ProtectedRoute><Parts /></ProtectedRoute>
+        element: <Parts />
     },
     {
         path: "dashboard/builds",
-        element: <ProtectedRoute><Builds /></ProtectedRoute>
+        element: <Builds />
     },
 ])
 
