@@ -52,7 +52,6 @@ export default function PartsWithImage({ id, name, type, brand, price, partImage
                     src={partImageLink}
                     objectFit={'cover'}
                     alt={`${name} image`}
-                    fallbackSrc='https://via.placeholder.com/300'
                 />
 
 
