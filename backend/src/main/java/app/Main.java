@@ -1,8 +1,6 @@
 package app;
 
 import org.springframework.beans.factory.annotation.Value;
-// import s3.S3Buckets;
-// import s3.S3Service;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,8 +11,6 @@ import app.customer.Customer;
 import app.customer.CustomerRepository;
 import app.customer.Gender;
 import app.customer.Role;
-
-// import java.util.UUID;
 
 @SpringBootApplication
 public class Main {
@@ -60,21 +56,4 @@ public class Main {
 
         };
     }
-
-    /* 
-    private void testBucketUploadAndDownload(S3Service s3Service, S3Buckets S3Buckets) {
-        s3Service.putObject(
-            S3Buckets.getCustomer(), 
-            "foo/bar/jamila-" + UUID.randomUUID(), 
-            "Hello World".getBytes()
-        );
-
-        byte[] obj = s3Service.getObject(
-            S3Buckets.getCustomer(), 
-            "foo/bar/jamila"
-        );
-
-        System.out.println("Hello: " + new String(obj));
-    } 
-    */
 }
