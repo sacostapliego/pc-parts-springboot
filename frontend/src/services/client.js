@@ -108,6 +108,54 @@ export const deletePart = async (id) => {
     }
 }
 
+export const getBuilds = async () => {
+    try {
+        return await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/builds`);
+    } catch (e) {
+        throw e;
+    }
+}
+
+export const getBuild = async (id) => {
+    try {
+        return await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/builds/${id}`);
+    } catch (e) {
+        throw e;
+    }
+}
+
+export const saveBuild = async (build) => {
+    try {
+        return await axios.post(
+            `${import.meta.env.VITE_API_BASE_URL}/api/v1/builds`,
+            build
+        )
+    } catch (e) {
+        throw e;
+    }
+}
+
+export const updateBuild = async (id, update) => {
+    try {
+        return await axios.put(
+            `${import.meta.env.VITE_API_BASE_URL}/api/v1/builds/${id}`,
+            update
+        )
+    } catch (e) {
+        throw e;
+    }
+}
+
+export const deleteBuild = async (id) => {
+    try {
+        return await axios.delete(
+            `${import.meta.env.VITE_API_BASE_URL}/api/v1/builds/${id}`
+        )
+    } catch (e) {
+        throw e;
+    }
+}
+
 export const login = async (usernameAndPassword) => {
     try {
         return await axios.post(
