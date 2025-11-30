@@ -50,7 +50,8 @@ public class SecurityFilterChainConfig {
                         "/ping",
                         "/api/v1/customers/*/profile-image",
                         "/api/v1/parts",
-                        "/api/v1/customers"
+                        "/api/v1/customers",
+                        "/api/v1/builds"
                 )
                 .permitAll()
                 .anyRequest()

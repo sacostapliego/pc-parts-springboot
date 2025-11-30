@@ -128,7 +128,8 @@ export const saveBuild = async (build) => {
     try {
         return await axios.post(
             `${import.meta.env.VITE_API_BASE_URL}/api/v1/builds`,
-            build
+            build,
+            getAuthConfig()
         )
     } catch (e) {
         throw e;
@@ -139,7 +140,8 @@ export const updateBuild = async (id, update) => {
     try {
         return await axios.put(
             `${import.meta.env.VITE_API_BASE_URL}/api/v1/builds/${id}`,
-            update
+            update,
+            getAuthConfig()
         )
     } catch (e) {
         throw e;
@@ -149,7 +151,8 @@ export const updateBuild = async (id, update) => {
 export const deleteBuild = async (id) => {
     try {
         return await axios.delete(
-            `${import.meta.env.VITE_API_BASE_URL}/api/v1/builds/${id}`
+            `${import.meta.env.VITE_API_BASE_URL}/api/v1/builds/${id}`,
+            getAuthConfig()
         )
     } catch (e) {
         throw e;
