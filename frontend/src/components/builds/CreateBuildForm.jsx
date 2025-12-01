@@ -80,7 +80,9 @@ const CreateBuildForm = ({ fetchBuilds, onClose }) => {
                     caseId: '',
                     gpuId: '',
                     cpuCoolerId: '',
-                    buildImageLink: ''
+                    buildImageLink: '',
+                    priceDisplayOption: 'ADMIN_ONLY',
+                    customPrice: ''
                 }}
                 validationSchema={Yup.object({
                     name: Yup.string()
@@ -93,7 +95,13 @@ const CreateBuildForm = ({ fetchBuilds, onClose }) => {
                     ramId: Yup.number().required('RAM is required'),
                     storageId: Yup.number().required('Storage is required'),
                     psuId: Yup.number().required('PSU is required'),
-                    buildImageLink: Yup.string().url('Must be a valid URL')
+                    buildImageLink: Yup.string().url('Must be a valid URL'),
+                    priceDisplayOption: Yup.string().required('Required'),
+                    customPrice: Yup.number().when('priceDisplayOption', {
+                        is: 'CUSTOM_PRICE',
+                        then: (schema) => schema.required('Custom price is required').positive('Must be positive'),
+                        otherwise: (schema) => schema.notRequired()
+                    })
                 })}
                 onSubmit={(build, { setSubmitting }) => {
                     setSubmitting(true);
@@ -115,7 +123,7 @@ const CreateBuildForm = ({ fetchBuilds, onClose }) => {
                         });
                 }}
             >
-                {({ isValid, isSubmitting, dirty }) => (
+                {({ isValid, isSubmitting, dirty, values }) => (
                     <Form>
                         <Stack spacing={"24px"}>
                             <MyTextInput
@@ -202,6 +210,21 @@ const CreateBuildForm = ({ fetchBuilds, onClose }) => {
                                     </option>
                                 ))}
                             </MySelect>
+
+                            <MySelect label="Price Display Option" name="priceDisplayOption">
+                                <option value="ADMIN_ONLY">Admin Only (Hide from users)</option>
+                                <option value="CUSTOM_PRICE">Custom Price</option>
+                                <option value="SHOW_CALCULATED">Show Calculated Price</option>
+                            </MySelect>
+
+                            {values.priceDisplayOption === 'CUSTOM_PRICE' && (
+                                <MyTextInput
+                                    label="Custom Price"
+                                    name="customPrice"
+                                    type="number"
+                                    placeholder="Enter custom price"
+                                />
+                            )}
 
                             <MyTextInput
                                 label="Build Image URL"

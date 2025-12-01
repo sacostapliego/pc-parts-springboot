@@ -17,9 +17,31 @@ import {
     Box,
     Heading,
 } from "@chakra-ui/react";
+import { useAuth } from "../context/AuthContext.jsx";
 
-const ViewBuildDrawer = ({ build, totalPrice }) => {
-    const { isOpen, onOpen, onClose } = useDisclosure();
+const ViewBuildDrawer = ({ build, totalPrice, isOpen, onClose }) => {
+    const { isUserAdmin } = useAuth();
+
+    const displayPrice = () => {
+        if (build.priceDisplayOption === 'ADMIN_ONLY' && !isUserAdmin()) {
+            return null;
+        }
+        
+        if (build.priceDisplayOption === 'CUSTOM_PRICE') {
+            if (isUserAdmin()) {
+                return (
+                    <Box fontSize='xl'>
+                        Total: <Text as="span" color="green.500">${build.customPrice}</Text>
+                        {' | '}
+                        <Text as="span" color="gray.500">${totalPrice}</Text>
+                    </Box>
+                );
+            }
+            return <Box fontSize='xl'>Total: ${build.customPrice}</Box>;
+        }
+        
+        return <Box fontSize='xl'>Total: ${totalPrice}</Box>;
+    };
 
     const PartDetail = ({ label, part }) => {
         if (!part) return null;
@@ -37,20 +59,7 @@ const ViewBuildDrawer = ({ build, totalPrice }) => {
         );
     };
 
-    return <>
-        <Button
-            bg={'blue.400'}
-            color={'white'}
-            rounded={'full'}
-            size={'sm'}
-            _hover={{
-                transform: 'translateY(-2px)',
-                boxShadow: 'lg'
-            }}
-            onClick={onOpen}
-        >
-            View Details
-        </Button>
+    return (
         <Drawer isOpen={isOpen} onClose={onClose} size={"xl"}>
             <DrawerOverlay />
             <DrawerContent>
@@ -58,9 +67,7 @@ const ViewBuildDrawer = ({ build, totalPrice }) => {
                 <DrawerHeader>
                     <VStack align="start" spacing={2}>
                         <Text>{build.name}</Text>
-                        <Box fontSize='xl'>
-                            Total: ${totalPrice}
-                        </Box>
+                        {displayPrice()}
                     </VStack>
                 </DrawerHeader> 
 
@@ -114,7 +121,7 @@ const ViewBuildDrawer = ({ build, totalPrice }) => {
                 </DrawerFooter>
             </DrawerContent>
         </Drawer>
-    </>;
+    );
 };
 
 export default ViewBuildDrawer;

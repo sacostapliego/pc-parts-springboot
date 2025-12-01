@@ -1,0 +1,3 @@
+ALTER TABLE build 
+ADD COLUMN price_display_option VARCHAR(50) DEFAULT 'ADMIN_ONLY',
+ADD COLUMN custom_price DECIMAL(10, 2);

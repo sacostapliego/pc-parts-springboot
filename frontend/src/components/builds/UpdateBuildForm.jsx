@@ -69,7 +69,11 @@ const UpdateBuildForm = ({ fetchBuilds, initialValues, buildId, onClose }) => {
     return (
         <>
             <Formik
-                initialValues={initialValues}
+                initialValues={{
+                    ...initialValues,
+                    priceDisplayOption: initialValues.priceDisplayOption || 'ADMIN_ONLY',
+                    customPrice: initialValues.customPrice || ''
+                }}
                 validationSchema={Yup.object({
                     name: Yup.string()
                         .max(100, 'Must be 100 characters or less')
@@ -81,7 +85,13 @@ const UpdateBuildForm = ({ fetchBuilds, initialValues, buildId, onClose }) => {
                     ramId: Yup.number().required('RAM is required'),
                     storageId: Yup.number().required('Storage is required'),
                     psuId: Yup.number().required('PSU is required'),
-                    buildImageLink: Yup.string().url('Must be a valid URL')
+                    buildImageLink: Yup.string().url('Must be a valid URL'),
+                    priceDisplayOption: Yup.string().required('Required'),
+                    customPrice: Yup.number().when('priceDisplayOption', {
+                        is: 'CUSTOM_PRICE',
+                        then: (schema) => schema.required('Custom price is required').positive('Must be positive'),
+                        otherwise: (schema) => schema.notRequired()
+                    })
                 })}
                 onSubmit={(updatedBuild, { setSubmitting }) => {
                     setSubmitting(true);
@@ -103,7 +113,7 @@ const UpdateBuildForm = ({ fetchBuilds, initialValues, buildId, onClose }) => {
                         });
                 }}
             >
-                {({ isValid, isSubmitting, dirty }) => (
+                {({ isValid, isSubmitting, dirty, values }) => (
                     <Form>
                         <Stack spacing={"24px"}>
                             <MyTextInput
@@ -190,6 +200,21 @@ const UpdateBuildForm = ({ fetchBuilds, initialValues, buildId, onClose }) => {
                                     </option>
                                 ))}
                             </MySelect>
+
+                            <MySelect label="Price Display Option" name="priceDisplayOption">
+                                <option value="ADMIN_ONLY">Admin Only (Hide from users)</option>
+                                <option value="CUSTOM_PRICE">Custom Price</option>
+                                <option value="SHOW_CALCULATED">Show Calculated Price</option>
+                            </MySelect>
+
+                            {values.priceDisplayOption === 'CUSTOM_PRICE' && (
+                                <MyTextInput
+                                    label="Custom Price"
+                                    name="customPrice"
+                                    type="number"
+                                    placeholder="Enter custom price"
+                                />
+                            )}
 
                             <MyTextInput
                                 label="Build Image URL"

@@ -26,7 +26,7 @@ const CreateBuildDrawer = ({ fetchBuilds }) => {
                     colorScheme={"blue"}
                     onClick={onOpen}
                 >
-                    Create Build
+                    Add Build
                 </Button>
                 <Drawer isOpen={isOpen} onClose={onClose} size={"xl"}>
                     <DrawerOverlay />

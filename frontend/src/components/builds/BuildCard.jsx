@@ -23,10 +23,11 @@ import UpdateBuildDrawer from './UpdateBuildDrawer.jsx';
 import ViewBuildDrawer from './ViewBuildDrawer.jsx';
 import { useAuth } from "../context/AuthContext.jsx";
 
-export default function BuildCard({ id, name, description, cpu, motherboard, ram, storage, psu, pcCase, gpu, cpuCooler, accessories, buildImageLink, fetchBuilds }) {
+export default function BuildCard({ id, name, description, cpu, motherboard, ram, storage, psu, pcCase, gpu, cpuCooler, accessories, buildImageLink, fetchBuilds, priceDisplayOption, customPrice, }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = useRef();
     const { isUserAdmin } = useAuth();
+    const { isOpen: isDrawerOpen, onOpen: onDrawerOpen, onClose: onDrawerClose } = useDisclosure();
 
     // Calculate total price
     const calculateTotalPrice = () => {
@@ -47,6 +48,46 @@ export default function BuildCard({ id, name, description, cpu, motherboard, ram
         return total.toFixed(2);
     };
 
+    // Display price based on settings
+    const displayPrice = () => {
+        const calculatedPrice = calculateTotalPrice();
+        
+        if (priceDisplayOption === 'ADMIN_ONLY' && !isUserAdmin()) {
+            return null;
+        }
+        
+        if (priceDisplayOption === 'CUSTOM_PRICE') {
+            if (isUserAdmin()) {
+                return (
+                    <Box fontSize='lg'>
+                        <Text as="span" color="green.500">${customPrice}</Text>
+                        {' | '}
+                        <Text as="span" color="gray.500">${calculatedPrice}</Text>
+                    </Box>
+                );
+            }
+            return <Box fontSize='lg'>${customPrice}</Box>;
+        }
+        
+        if (priceDisplayOption === 'SHOW_CALCULATED') {
+            return <Box fontSize='lg'>${calculatedPrice}</Box>;
+        }
+        
+        if (isUserAdmin()) {
+            return <Box fontSize='lg'>${calculatedPrice}</Box>;
+        }
+        
+        return null;
+    };
+
+    // Get CPU and GPU combo string
+    const getCpuGpuCombo = () => {
+        if (gpu) {
+            return `${cpu.name} | ${gpu.name}`;
+        }
+        return cpu.name;
+    };
+
     return (
         <Center py={6}>
             <Box
@@ -58,6 +99,8 @@ export default function BuildCard({ id, name, description, cpu, motherboard, ram
                 boxShadow={'lg'}
                 rounded={'md'}
                 overflow={'hidden'}
+                onClick={onDrawerOpen}
+                cursor={'pointer'}
                 _hover={{
                     transform: 'scale(1.005)',
                     boxShadow: '1xl'
@@ -76,39 +119,50 @@ export default function BuildCard({ id, name, description, cpu, motherboard, ram
                         <Heading fontSize={'2xl'} fontWeight={500} fontFamily={'body'}>
                             {name}
                         </Heading>
+                        <Text fontSize="sm" color="gray.500" fontWeight="medium">
+                            {getCpuGpuCombo()}
+                        </Text>
                         <Text color={'gray.500'} noOfLines={2} textAlign={'center'}>
                             {description}
                         </Text>
-                        <Box fontSize='lg'>
-                            ${calculateTotalPrice()}
-                        </Box>
+                        {displayPrice()}
                     </Stack>
 
-                    <Stack direction={'row'} justify={'center'} spacing={3}>
-                        <ViewBuildDrawer
-                            build={{ id, name, description, cpu, motherboard, ram, storage, psu, pcCase, gpu, cpuCooler, accessories, buildImageLink }}
-                            totalPrice={calculateTotalPrice()}
-                        />
-                        {isUserAdmin() && (
-                            <>
-                                <UpdateBuildDrawer
-                                    initialValues={{ name, description, cpuId: cpu.id, motherboardId: motherboard.id, ramId: ram.id, storageId: storage.id, psuId: psu.id, caseId: pcCase?.id, gpuId: gpu?.id, cpuCoolerId: cpuCooler?.id, accessoryIds: accessories?.map(a => a.id), buildImageLink }}
-                                    buildId={id}
-                                    fetchBuilds={fetchBuilds}
-                                />
-                                <Button
-                                    bg={'red.400'}
-                                    color={'white'}
-                                    rounded={'full'}
-                                    size={'sm'}
-                                    _hover={{
-                                        transform: 'translateY(-2px)',
-                                        boxShadow: 'lg'
-                                    }}
-                                    onClick={onOpen}
-                                >
-                                    Delete
-                                </Button>
+                   {isUserAdmin() && (
+                        <Stack direction={'row'} justify={'center'} spacing={3} onClick={(e) => e.stopPropagation()}>
+                            <UpdateBuildDrawer
+                                initialValues={{ 
+                                    name, 
+                                    description, 
+                                    cpuId: cpu.id, 
+                                    motherboardId: motherboard.id, 
+                                    ramId: ram.id, 
+                                    storageId: storage.id, 
+                                    psuId: psu.id, 
+                                    caseId: pcCase?.id, 
+                                    gpuId: gpu?.id, 
+                                    cpuCoolerId: cpuCooler?.id, 
+                                    accessoryIds: accessories?.map(a => a.id), 
+                                    buildImageLink,
+                                    priceDisplayOption: priceDisplayOption || 'ADMIN_ONLY',
+                                    customPrice: customPrice || ''
+                                }}
+                                buildId={id}
+                                fetchBuilds={fetchBuilds}
+                            />
+                            <Button
+                                bg={'red.400'}
+                                color={'white'}
+                                rounded={'full'}
+                                size={'sm'}
+                                _hover={{
+                                    transform: 'translateY(-2px)',
+                                    boxShadow: 'lg'
+                                }}
+                                onClick={onOpen}
+                            >
+                                Delete
+                            </Button>
                                 <AlertDialog
                                     isOpen={isOpen}
                                     leastDestructiveRef={cancelRef}
@@ -148,11 +202,16 @@ export default function BuildCard({ id, name, description, cpu, motherboard, ram
                                         </AlertDialogContent>
                                     </AlertDialogOverlay>
                                 </AlertDialog>
-                            </>
+                        </Stack>
                         )}
-                    </Stack>
                 </Box>
             </Box>
+            <ViewBuildDrawer
+                isOpen={isDrawerOpen}
+                onClose={onDrawerClose}
+                build={{ id, name, description, cpu, motherboard, ram, storage, psu, pcCase, gpu, cpuCooler, accessories, buildImageLink, priceDisplayOption, customPrice }}
+                totalPrice={calculateTotalPrice()}
+            />
         </Center>
     );
 }
